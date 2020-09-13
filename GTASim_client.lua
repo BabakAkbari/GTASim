@@ -47,7 +47,6 @@ function GetAccelerations(entity)
 end
 
 
--- 
 RegisterNetEvent('PWMOutputs')
 AddEventHandler('PWMOutputs', function(mot1, mot2, mot3, mot4)
     print('motor1:', mot1,', motor2:',mot2,', motor3:',mot3,', motor4:',mot4)
@@ -145,20 +144,21 @@ function process_sensors()
         drone = GetCurrentDrone()
         angular_velocity_vector = GetEntityRotationVelocity(drone) 
         angular_velocity_vector = angular_velocity_vector * 0.0174533
-        angular_velocity_vector = {angular_velocity_vector.x, angular_velocity_vector.y, angular_velocity_vector.z}
+        angular_velocity_vector = {angular_velocity_vector.y, angular_velocity_vector.x, angular_velocity_vector.z}
 
         acceleration_vector = GetAccelerations(drone)
-        acceleration_vector = {acceleration_vector.x, acceleration_vector.y, -acceleration_vector.z - 10}
+        acceleration_vector = {acceleration_vector.y, acceleration_vector.x, -acceleration_vector.z - 10}
         
         position_vector = GetEntityCoords(drone)
-        position_vector = {position_vector.x, position_vector.y, -GetEntityHeightAboveGround(drone)}
+        position_vector = {position_vector.y, position_vector.x, -GetEntityHeightAboveGround(drone)}
         
         attitude_vector = GetEntityRotation(drone)
+        SetCamRot(drone_cam, attitude_vector.x, attitude_vector.y, attitude_vector.z, 1)
         attitude_vector = attitude_vector * 0.0174533
-        attitude_vector = {attitude_vector.y, attitude_vector.x, GetEntityHeading(drone)} 
+        attitude_vector = {attitude_vector.y, attitude_vector.x, GetEntityHeading(drone) * 0.0174533} 
 
         velocity_vector = GetEntityVelocity(drone)
-        velocity_vector = {velocity_vector.x, velocity_vector.y, -velocity_vector.z}
+        velocity_vector = {velocity_vector.y, velocity_vector.x, -velocity_vector.z}
         
         TriggerServerEvent('SensorData', angular_velocity_vector, acceleration_vector, position_vector, attitude_vector,
         velocity_vector)
