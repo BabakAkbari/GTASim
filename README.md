@@ -39,8 +39,9 @@ The JSON SITL backend allows GTASim to easily interface with ArduPilot using a s
 Execute the following commands to launch SITL using JSON backend. This will open up MAVProxy's command line.
 ```
 cd ardupilot
-sim_vehicle.py -v ArduCopter --console --map -f json:GTASim_ip
+sim_vehicle.py -v ArduCopter --console --map -f json:127.0.0.1
 ```
+where `127.0.0.1` is replaced with the IP GTASim is running at.
 Go back to the game press `t` and type `/drone` in the text field. This will spawn a drone next to the PED on the ground in First-Person View. In order to switch between cameras press `t` and type `/cam` in the text field. 
 Go back to MAVProxy's command line and type `arm throttle` to arm the motors and then type `rc 3 1800` to lift the drone up.
-For more infomation visit [Using SITL](https://ardupilot.org/dev/docs/using-sitl-for-ardupilot-testing.html)
+For more infomation visit [Using SITL](https://ardupilot.org/dev/docs/using-sitl-for-ardupilot-testing.html).
