@@ -47,6 +47,6 @@ Go back to MAVProxy's command line and type `arm throttle` to arm the motors and
 For more infomation, visit [Using SITL](https://ardupilot.org/dev/docs/using-sitl-for-ardupilot-testing.html).
 
 ## Contributing Code
-If you want to conbtribute to code, go through the FiveM [Documentaion](https://docs.fivem.net/docs/).
-You can also find some useful information on how to get startted scripting in the link [Creating your first script in Lua](https://docs.fivem.net/docs/scripting-manual/introduction/creating-your-first-script/).
+If you want to conbtribute to the code, go through the FiveM [Documentaion](https://docs.fivem.net/docs/).
+You can also find some useful information on how to get started scripting in the link [Creating your first script in Lua](https://docs.fivem.net/docs/scripting-manual/introduction/creating-your-first-script/).
 Also a full list of native functions is available on [FiveM Natives](https://runtime.fivem.net/doc/natives/).
