@@ -33,11 +33,13 @@ Run FiveM.exe, click on the `localhost` button in the developer mode to connect 
 
 ### Using GTASim with ArduPilot
 
-Follow the instructions in the link to [set up SITL](https://ardupilot.org/dev/docs/SITL-setup-landingpage.html)
-**Currently suport for copter has been developed in GTASim**
+Follow the instructions in the link to [set up SITL](https://ardupilot.org/dev/docs/SITL-setup-landingpage.html).
+**Currently suport for copter has been developed in GTASim**.
 The JSON SITL backend allows GTASim to easily interface with ArduPilot using a standard JSON interface. 
-Execute the following commands to launch SITL.
+Execute the following commands to launch SITL. This will open up MAVProxy's command line.
 ```
 cd ardupilot
 sim_vehicle.py -v ArduCopter --console --map -f json:GTASim_ip
 ```
+Go back to the game press `t` and type `/drone` in the text field. This will spawn a drone next to the PED on the ground in First-Person View. In order to switch between cameras press `t` and type `/cam` in the text field. 
+go back to MAVProxy's command line and type `arm throttle` to arm the motors and then type `rc 3 1800` to lift the drone.
