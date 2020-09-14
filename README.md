@@ -1,6 +1,6 @@
 # GTASim
 
-GTASim is an open source simulator based on GTA V for drones, planes, cars, boats and various other vehicles integrated with [ArduPilot](https://github.com/ArduPilot/ardupilot) a popular full-featured and reliable open source autopilot software. 
+GTASim is an open source simulator based on GTA V for drones, planes, cars, boats and various other vehicles integrated with [ArduPilot](https://github.com/ArduPilot/ardupilot), a popular full-featured and reliable open source autopilot software. 
 
 ## How to use it
 
@@ -29,7 +29,7 @@ FXServer\server\FXServer.exe +exec server.cfg
 
 ### Connecting to the Server
 
-Run FiveM.exe, click on the `localhost` button in the developer mode to connect to the server or simply press `F8`. This will open up your client console then type `connect loalhost:30120` to connect to your server. After the game is loaded go back to your server console and execute `start GTASim` to run GTASim scripts. For more information visit [Scripting manual](https://docs.fivem.net/docs/scripting-manual/) 
+Run FiveM.exe, click on the `localhost` button in the developer mode to connect to the server or simply press `F8`. This will open up your client console then type `connect loalhost:30120` to connect to your server. After the game is loaded, go back to your server console and execute `start GTASim` to run GTASim scripts. For more information, visit [Scripting manual](https://docs.fivem.net/docs/scripting-manual/) 
 
 ### Using GTASim with ArduPilot
 
@@ -44,4 +44,4 @@ sim_vehicle.py -v ArduCopter --console --map -f json:127.0.0.1
 where `127.0.0.1` is replaced with the IP GTASim is running at.
 Go back to the game press `t` and type `/drone` in the text field. This will spawn a drone next to the PED on the ground in First-Person View. In order to switch between cameras press `t` and type `/cam` in the text field. 
 Go back to MAVProxy's command line and type `arm throttle` to arm the motors and then type `rc 3 1800` to lift the drone up.
-For more infomation visit [Using SITL](https://ardupilot.org/dev/docs/using-sitl-for-ardupilot-testing.html).
+For more infomation, visit [Using SITL](https://ardupilot.org/dev/docs/using-sitl-for-ardupilot-testing.html).
