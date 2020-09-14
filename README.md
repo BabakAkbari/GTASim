@@ -33,5 +33,11 @@ Run FiveM.exe, click on the `localhost` button in the developer mode to connect 
 
 ### Using GTASim with ArduPilot
 
-Follow the instructions in the link to [set up the SITL](https://ardupilot.org/dev/docs/SITL-setup-landingpage.html)
+Follow the instructions in the link to [set up SITL](https://ardupilot.org/dev/docs/SITL-setup-landingpage.html)
 **Currently suport for copter has been developed in GTASim**
+The JSON SITL backend allows GTASim to easily interface with ArduPilot using a standard JSON interface. 
+Execute the following commands to launch SITL.
+```
+cd ardupilot
+sim_vehicle.py -v ArduCopter --console --map -f json:GTASim_ip
+```
