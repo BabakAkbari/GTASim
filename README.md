@@ -15,7 +15,7 @@ Follow the instructions in the link to [install FiveM Client](https://docs.fivem
 ### Setting up a server
 
 Follow the instructions in the link to [set up your FXServer](https://docs.fivem.net/docs/server-manual/setting-up-a-server/). 
-You can install FXServer on both [Windows](https://docs.fivem.net/docs/server-manual/setting-up-a-server/#windows) and [Linux](https://docs.fivem.net/docs/server-manual/setting-up-a-server/#linux). Throughout this instruction we assume that we are using Windows to run the server.
+You can install FXServer on both [Windows](https://docs.fivem.net/docs/server-manual/setting-up-a-server/#windows) and [Linux](https://docs.fivem.net/docs/server-manual/setting-up-a-server/#linux). Throughout this instruction, we assume that we are using Windows to run the server.
 
 After you set up the server, you need to clone GTASim in your resources under the path `FXServer\server-data\resources\[local]` and run the server.
 
@@ -36,11 +36,11 @@ Run FiveM.exe, click on the `localhost` button in the developer mode to connect 
 Follow the instructions in the link to [set up SITL](https://ardupilot.org/dev/docs/SITL-setup-landingpage.html).
 **Currently suport for copter has been developed in GTASim**.
 The JSON SITL backend allows GTASim to easily interface with ArduPilot using a standard JSON interface. 
-Execute the following commands to launch SITL. This will open up MAVProxy's command line.
+Execute the following commands to launch SITL using JSON backend. This will open up MAVProxy's command line.
 ```
 cd ardupilot
 sim_vehicle.py -v ArduCopter --console --map -f json:GTASim_ip
 ```
 Go back to the game press `t` and type `/drone` in the text field. This will spawn a drone next to the PED on the ground in First-Person View. In order to switch between cameras press `t` and type `/cam` in the text field. 
-go back to MAVProxy's command line and type `arm throttle` to arm the motors and then type `rc 3 1800` to lift the drone up.
+Go back to MAVProxy's command line and type `arm throttle` to arm the motors and then type `rc 3 1800` to lift the drone up.
 For more infomation visit [Using SITL](https://ardupilot.org/dev/docs/using-sitl-for-ardupilot-testing.html)
