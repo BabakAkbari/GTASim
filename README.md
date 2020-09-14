@@ -45,3 +45,8 @@ where `127.0.0.1` is replaced with the IP GTASim is running at.
 Go back to the game press `t` and type `/drone` in the text field. This will spawn a drone next to the PED on the ground in First-Person View. In order to switch between cameras press `t` and type `/cam` in the text field. 
 Go back to MAVProxy's command line and type `arm throttle` to arm the motors and then type `rc 3 1800` to lift the drone up.
 For more infomation, visit [Using SITL](https://ardupilot.org/dev/docs/using-sitl-for-ardupilot-testing.html).
+
+## Contributing Code
+If you want to conbtribute to code, go through the FiveM [Documentaion](https://docs.fivem.net/docs/).
+You can also find some useful information on how to get startted scripting in the link [Creating your first script in Lua](https://docs.fivem.net/docs/scripting-manual/introduction/creating-your-first-script/).
+Also a full list of native functions is available on [FiveM Natives](https://runtime.fivem.net/doc/natives/).
