@@ -16,15 +16,16 @@ function CreateDrone(where)
     end)
     local location = vector3(where.x - 1, where.y - 2, where.z )
     local drone = CreateObject(model, location, true, true, true)
-    SetObjectPhysicsParams(drone, 1.0, 1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, 1.1, -1.0)
+    SetObjectPhysicsParams(drone, 1.0, 1.0, -1.0, -1.0, -1.0, -1.0, -1.0,-1.0, -1.0, -1.0, -1.0)
     ActivatePhysics(drone)
     SetEntityHasGravity(drone, true)
     drone_cam = CreateCam("DEFAULT_SCRIPTED_CAMERA", true)
-    AttachCamToEntity(drone_cam, drone, 0.0, 0.0, 0.5, true)
+    AttachCamToEntity(drone_cam, drone, 0.0, -1.5, 0.5, true)
     SetCamRot(drone_cam, 0.0, 0.0, 0.0, 1)
     SetCamActive(drone_cam, true)
     RenderScriptCams(true, true, 1, true, true)
     is_active = true
+    origin = GetEntityCoords(drone)
     return drone
 end
 
@@ -67,12 +68,12 @@ AddEventHandler('MotorOutputs', function(mot1, mot2, mot3, mot4)
         local p12 = false
         local p13 = true
         local yaw_rate = mot1 + mot2 - mot3 - mot4
-        local momentum = vector3(0, 0, yaw_rate)
+        local momentum = vector3(0, 0, yaw_rate / 2)
         local center_mass = vector3(0, 0, 0)
         ApplyForceToEntity(
             entity,
             4,
-            momentum / 10,
+            momentum,
             center_mass,
             boneIndex,
             isDirectionRel,
@@ -150,14 +151,19 @@ function process_sensors()
         acceleration_vector = {acceleration_vector.y, acceleration_vector.x, -acceleration_vector.z - 10}
         
         position_vector = GetEntityCoords(drone)
-        position_vector = {position_vector.y, position_vector.x, -GetEntityHeightAboveGround(drone)}
+        position_vector = position_vector - origin
+        -- print(position_vector)
+        position_vector = {position_vector.y, position_vector.x, -position_vector.z}
         
         attitude_vector = GetEntityRotation(drone)
-        SetCamRot(drone_cam, attitude_vector.x, attitude_vector.y, attitude_vector.z, 1)
+        -- print(attitude_vector)
+        -- SetCamRot(drone_cam, attitude_vector.x, attitude_vector.y, attitude_vector.z, 0)
+        SetCamRot(drone_cam, -20.0, 0.0, attitude_vector.z, 0)
         attitude_vector = attitude_vector * 0.0174533
         attitude_vector = {attitude_vector.y, attitude_vector.x, GetEntityHeading(drone) * 0.0174533} 
 
         velocity_vector = GetEntityVelocity(drone)
+        -- print(velocity_vector)
         velocity_vector = {velocity_vector.y, velocity_vector.x, -velocity_vector.z}
         
         TriggerServerEvent('SensorData', angular_velocity_vector, acceleration_vector, position_vector, attitude_vector,

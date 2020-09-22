@@ -11,7 +11,7 @@ var timestamp = 0;
 onNet(
     "SensorData",
     (gyro_vector, acceleration_vector, position_vector, attitude_vector, velocity_vector) => {
-        timestamp = timestamp + 1;
+        timestamp = timestamp + 1/50;
         const message = `
             {"timestamp":${timestamp},"imu":{"gyro":[${gyro_vector[0]},${gyro_vector[1]},${gyro_vector[2]}],"accel_body":[${acceleration_vector[0]},${acceleration_vector[1]},${acceleration_vector[2]}]},"position":[${position_vector[0].toFixed(7)},${position_vector[1].toFixed(7)},${position_vector[2].toFixed(3)}],"attitude":[${attitude_vector[0]},${attitude_vector[1]},${attitude_vector[2]}],"velocity":[${velocity_vector[0]},${velocity_vector[1]},${velocity_vector[2]}]}
             `;
