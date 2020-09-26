@@ -18,5 +18,5 @@ server_scripts {
     'Copter/copter_server.js',
     'Plane/plane_server.js',
     'Sub/sub_server.js',
-    'Rover/rover_server.js',
+    'Rover/rover_server.js'
 }
