@@ -1,4 +1,6 @@
 -- register vehicle command
+-- a list of available vehicle models is documented in https://wiki.gtanet.work/index.php?title=Vehicle_Models 
+-- but it may not be complete
 RegisterCommand('vehicle', function(source, args)
     -- account for the argument not being passed
     local vehicleName = args[1] or 'adder'
@@ -43,52 +45,6 @@ RegisterCommand('vehicle', function(source, args)
     TriggerEvent('chat:addMessage', {
 		args = { 'Woohoo! Enjoy your new ^*' .. vehicleName .. '!' }
 	})
-end, false)
-
--- register trunk command
-RegisterCommand('trunk', function(source)
-    local playerPed = PlayerPedId()
-    local vehicle = GetVehiclePedIsIn(playerPed, false)
-    if vehicle == 0 then
-        TriggerEvent('chat:addMessage', {
-            args = {'Player is not in a vehicle'}
-        })
-        return
-    end
-    if GetVehicleDoorAngleRatio(vehicle, 5) ~= 0 then
-        SetVehicleDoorShut(vehicle, 5, false)
-        TriggerEvent('chat:addMessage', {
-            args = {'Closing the trunk'}
-        })
-    else
-        SetVehicleDoorOpen(vehicle, 5, true, false)
-        TriggerEvent('chat:addMessage', {
-            args = {'Openning the trunk'}
-        })
-    end
-end, false)
-
--- register hood command
-RegisterCommand('hood', function(source)
-    local playerPed = PlayerPedId()
-    local vehicle = GetVehiclePedIsIn(playerPed, false)
-    if vehicle == 0 then
-        TriggerEvent('chat:addMessage', {
-            args = {'Player is not in a vehicle'}
-        })
-        return
-    end
-    if GetVehicleDoorAngleRatio(vehicle, 4) ~= 0 then
-        SetVehicleDoorShut(vehicle, 4, false)
-        TriggerEvent('chat:addMessage', {
-            args = {'Closing the hood'}
-        })
-    else
-        SetVehicleDoorOpen(vehicle, 4, true, false)
-        TriggerEvent('chat:addMessage', {
-            args = {'Openning the hood'}
-        })
-    end
 end, false)
 
 -- register cam command
