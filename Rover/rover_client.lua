@@ -1,4 +1,4 @@
--- register vehicle command
+-- register rover command
 -- a list of available vehicle models is documented in https://wiki.gtanet.work/index.php?title=Vehicle_Models 
 -- but it may not be complete
 RegisterCommand('rover', function(source, args)
