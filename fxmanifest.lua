@@ -8,5 +8,15 @@ version '1.0.0'
 resource_type 'gametype' { name = 'My awesome game type!' }
 
 
-client_script 'GTASim_client.lua'
-server_script 'GTASim_server.js'
+client_scripts{
+    'Copter/copter_client.lua',
+    'Plane/plane_client.lua',
+    'Sub/sub_client.lua',
+    'Rover/rover_client.lua'
+}
+server_scripts {
+    'Copter/copter_server.js',
+    'Plane/plane_server.js',
+    'Sub/sub_server.js',
+    'Rover/rover_server.js',
+}
