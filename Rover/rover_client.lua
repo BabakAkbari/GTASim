@@ -210,6 +210,8 @@ end
 i = -45.0
 j = -15.0
 function RayCastGamePlayCamera(distance)
+    local playerPed = PlayerPedId()
+    local vehicle = GetVehiclePedIsIn(playerPed, false)
     if i > 57.0 then 
         i = -57.0
         j = j - 5.0
@@ -218,8 +220,8 @@ function RayCastGamePlayCamera(distance)
         j = 20.0
     end
     i = i + 10.0
-	local cameraRotation = GetEntityRotation(GetVehiclePedIsIn(GetPlayerPed(-1))) + vector3(j, 0.0, i)
-	local cameraCoord = GetEntityCoords(GetVehiclePedIsIn(GetPlayerPed(-1)))
+	local cameraRotation = GetEntityRotation(vehicle) + vector3(j, 0.0, i)
+	local cameraCoord = GetEntityCoords(vehicle)
 	local direction = RotationToDirection(cameraRotation)
 	local destination = 
 	{ 
@@ -234,20 +236,22 @@ end
 
 -- create a thread and run ray-casting
 Citizen.CreateThread(function()
-	while true do
-		Citizen.Wait(0)
-        local hit, coords, entity = RayCastGamePlayCamera(100.0)
-        local position = GetEntityCoords(GetPlayerPed(-1))
-        distance = position - coords
-        if hit and #distance < 1000 then 
-            DrawLine(position.x, position.y, position.z, coords.x, coords.y, coords.z, 0, 255, 0, 255)
-        end
-        local flag, x, y, z = GetScreenCoordFromWorldCoord(coords.x, coords.y, coords.z)
-        print("radius is :", #distance)
-		if hit and (IsEntityAVehicle(entity) or IsEntityAPed(entity)) then
+    while true do
+        if GetVehiclePedIsIn(PlayerPedId(), false) ~= 0 then
+            local hit, coords, entity = RayCastGamePlayCamera(100.0)
             local position = GetEntityCoords(GetPlayerPed(-1))
-            DrawLine(position.x, position.y, position.z, coords.x, coords.y, coords.z, 255, 0, 0, 255)
-		end
+            distance = position - coords
+            if hit and #distance < 1000 then 
+                DrawLine(position.x, position.y, position.z, coords.x, coords.y, coords.z, 0, 255, 0, 255)
+            end
+            local flag, x, y, z = GetScreenCoordFromWorldCoord(coords.x, coords.y, coords.z)
+            print("radius is :", #distance)
+            if hit and (IsEntityAVehicle(entity) or IsEntityAPed(entity)) then
+                local position = GetEntityCoords(GetPlayerPed(-1))
+                DrawLine(position.x, position.y, position.z, coords.x, coords.y, coords.z, 255, 0, 0, 255)
+            end
+        end
+        Citizen.Wait(0)
 	end
 end)
 
