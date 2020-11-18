@@ -25,6 +25,8 @@ RegisterCommand('rover', function(source, args)
     -- get the player's position
     local playerPed = PlayerPedId() -- get the local player ped
     local pos = GetEntityCoords(playerPed) -- get the position of the local player ped
+    ReviveInjuredPed(playerPed)
+    SetEntityHealth(playerPed, 200)
 
     -- create the vehicle
     local vehicle = CreateVehicle(vehicleName, pos.x, pos.y, pos.z, GetEntityHeading(playerPed), true, false)
@@ -92,3 +94,109 @@ RegisterCommand('hood', function(source)
         })
     end
 end, false)
+
+-- set motor outputs
+thread_counter_pedal = 0 
+RegisterNetEvent('Rover:MotorOutputs')
+AddEventHandler('Rover:MotorOutputs', function(throttle, steer)
+    local playerPed = PlayerPedId()
+    local vehicle = GetVehiclePedIsIn(playerPed, false)
+    thread_counter_pedal = thread_counter_pedal + 1
+    local thread_id = thread_counter_pedal
+    while GetVehiclePedIsIn(playerPed, false) ~= 0 and thread_id == thread_counter_pedal do
+        -- local speedms = GetEntitySpeed(GetVehiclePedIsIn(playerPed, false))
+        -- print("speed:", speedms)
+        -- print("value:", value)
+        -- print("thread_counter", thread_counter_pedal)
+        -- print("control", SetControlNormal(27, 71, throttle / 1000 - 1))
+        if throttle >= 1500 then
+            SetControlNormal(27, 71, throttle / 500 - 3)
+        else
+            SetControlNormal(27, 72, throttle / 500 - 2)
+        end
+            SetControlNormal(27, 59, 0.002 * steer - 3)
+        -- SetControlNormal(27, 59, -1.0)
+        -- SetVehicleSteeringAngle(vehicle, 0.002 * steer - 270)
+        Citizen.Wait(0)
+    end
+end)
+
+-- process sensors and send data back to server side
+function rover_process_sensors()
+    local playerPed = PlayerPedId()
+    local vehicle = GetVehiclePedIsIn(playerPed, false)
+    if vehicle ~=0 then
+        angular_velocity_vector = GetEntityRotationVelocity(vehicle) 
+        angular_velocity_vector = angular_velocity_vector * 0.0174533
+        angular_velocity_vector = {angular_velocity_vector.y, angular_velocity_vector.x, angular_velocity_vector.z}
+
+        acceleration_vector = GetAccelerations(vehicle)
+        acceleration_vector = {acceleration_vector.y, acceleration_vector.x, -acceleration_vector.z - 10}
+        
+        position_vector = GetEntityCoords(vehicle)
+        -- print(position_vector)
+        position_vector = {position_vector.y, position_vector.x, -position_vector.z}
+        
+        attitude_vector = GetEntityRotation(vehicle)
+        -- print(attitude_vector)
+        -- SetCamRot(drone_cam, attitude_vector.x, attitude_vector.y, attitude_vector.z, 0)
+        -- SetCamRot(drone_cam, -20.0, 0.0, attitude_vector.z, 0)
+        attitude_vector = attitude_vector * 0.0174533
+        attitude_vector = {attitude_vector.y, attitude_vector.x, GetEntityHeading(drone) * 0.0174533} 
+
+        velocity_vector = GetEntityVelocity(vehicle)
+        -- print(velocity_vector)
+        velocity_vector = {velocity_vector.y, velocity_vector.x, -velocity_vector.z}
+        
+        TriggerServerEvent('SensorData', angular_velocity_vector, acceleration_vector, position_vector, attitude_vector,
+        velocity_vector)
+    end
+end
+
+thread_counter_speed = 0
+RegisterCommand('speed', function(source, args)
+    local value = tonumber(args[1]) / 3.6
+    local _kp = 15 / value
+    local _kd = 0.01 / value
+    -- local _ki = 85 / value
+    local _ki = 95 / value
+    local playerPed = PlayerPedId()
+    local vehicle = GetVehiclePedIsIn(playerPed, false)
+    thread_counter_speed = thread_counter_speed + 1
+    local thread_id = thread_counter_speed
+    local _error_last = 0
+    local _error = 0
+    local _integrator = 0
+    local _dt = 0.001
+    local throttle
+    while GetVehiclePedIsIn(playerPed, false) ~= 0 and thread_id == thread_counter_speed do
+        throttle = _kp * _error + _kd * (_error - _error_last) / _dt + _ki * _integrator
+        if throttle > 1.0 then
+            throttle = 1.0
+        end
+        SetControlNormal(27, 71, throttle)
+        -- print("speed:", GetEntitySpeed(vehicle))
+        if GetEntitySpeed(vehicle) - value > 4.0 then
+            SetVehicleBrake(vehicle, true)
+        end
+        _error_last = value - GetEntitySpeed(vehicle)
+        Citizen.Wait(_dt * 1000)
+        _error = value - GetEntitySpeed(vehicle)
+        _integrator = _integrator + _error * _dt
+        print("integrator:", _integrator)
+        if _integrator > 0.2 then
+            _integrator = 0.0
+        elseif _integrator < -0.1 then
+            _integrator = 0.0
+        end
+    end
+end, false)
+
+-- create a thread and run sensors
+Citizen.CreateThread(function()
+        rover_process_sensors()
+        Citizen.Wait(0)   
+    end
+end)
+
+
