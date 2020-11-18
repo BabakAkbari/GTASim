@@ -49,7 +49,7 @@ For more infomation, visit [Using SITL](https://ardupilot.org/dev/docs/using-sit
 ### Using Lidar
 
 Press `F8` to open the client console. Use `con_miniconChannels *` command to display console messages on screen without needing to open the client console.
-Once you get into the game, press `t` and type `/rover raiden` to spawn a car. press `f` to get in the car. you must be able to see the measured distance on the bottom left corner. (A list of available vehicle models is documented in [List](https://wiki.gtanet.work/index.php?title=Vehicle_Models).)
+Once you get into the game, press `t` and type `/rover raiden` to spawn a car. press `f` to get in the car. you must be able to see the measured distance on the bottom left corner. ( A list of available vehicle models is documented in [List](https://wiki.gtanet.work/index.php?title=Vehicle_Models) .)
 
 ## Contributing Code
 If you want to conbtribute to the code, go through the FiveM [Documentaion](https://docs.fivem.net/docs/).
