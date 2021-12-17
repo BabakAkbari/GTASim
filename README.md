@@ -1,6 +1,8 @@
 # GTASim
 
-GTASim is an open source simulator based on GTA V for drones, planes, cars, boats and various other vehicles integrated with [ArduPilot](https://github.com/ArduPilot/ardupilot), a popular full-featured and reliable open source autopilot software. 
+GTASim is an open source simulator based on GTA V for drones, planes, cars, boats and various other vehicles integrated with [ArduPilot](https://github.com/ArduPilot/ardupilot), a popular full-featured and reliable open source autopilot software.
+
+![alt text](https://github.com/BabakAkbari/GTASim/blob/master/gta5.jpg)
 
 ## How to use it
 
